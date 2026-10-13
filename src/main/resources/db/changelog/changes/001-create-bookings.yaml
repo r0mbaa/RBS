@@ -1,0 +1,60 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-bookings
+      author: roman
+      changes:
+        - createTable:
+            tableName: bookings
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: room
+                  type: VARCHAR(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: title
+                  type: VARCHAR(200)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: organizer
+                  type: VARCHAR(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: start_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: end_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: TIMESTAMP
+                  constraints:
+                    nullable: false
+        - sql:
+            sql: ALTER TABLE bookings ADD CONSTRAINT chk_bookings_end_after_start CHECK (end_at > start_at)
+        - createIndex:
+            tableName: bookings
+            indexName: idx_bookings_room_start_end
+            columns:
+              - column:
+                  name: room
+              - column:
+                  name: start_at
+              - column:
+                  name: end_at
+      rollback:
+        - dropTable:
+            tableName: bookings

@@ -31,10 +31,10 @@ public class Booking {
     @Column(nullable = false, length = 20)
     private  RoomType room;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 200)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 100)
     private String organizer;
 
     @Column(nullable = false)
